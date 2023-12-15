@@ -2,7 +2,7 @@ import java.util.*;
 
 public class StudentRepo {
 
-    private final Map<String, Student> students = new HashMap<>();
+    private static final Map<String, Student> students = new HashMap<>();
 
     public List<Student> getAllStudents() {
         return new ArrayList<>(students.values());
@@ -13,7 +13,11 @@ public class StudentRepo {
         return student;
     }
 
-    public Optional<Student> findStudentById(String id) {
-        return Optional.ofNullable(students.get(id));
+   static public Student findStudentById(String id) throws NoStudentWithId {
+        if (!students.containsKey(id)) {
+            throw new NoStudentWithId("No such Student");
+        }
+        return students.get(id);
     }
+
 }
